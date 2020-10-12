@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,13 +12,17 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Collapse from '@material-ui/core/Collapse';
+import SignUp from './SignUp'
+
+
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link target="_blank" color="inherit" href="https://github.com/CarlosGaubertQ/votapp">
+        VotApp
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -55,11 +59,35 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  collapse: {
+    marginTop: theme.spacing(4),
+    alignItems: 'center',  
+    align: 'center',  
+    textAlign: 'center'
+  },
+  centrar: {
+    marginTop: theme.spacing(1),
+    alignItems: 'center',  
+    align: 'center',  
+    textAlign: 'center'
+  },
 }));
 
-export default function SignInSide() {
+export default function Login() {
   const classes = useStyles();
+  const [ coll, setcoll ] = useState(false)
+  //const { register, handleSubmit, errors } = useForm();
 
+
+  const cambio = () =>{
+      console.log(coll)
+      setcoll(!coll)
+  }
+
+
+
+
+  //console.log(errors)
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -70,17 +98,18 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            ¡Ingresa!
           </Typography>
-          <form className={classes.form} noValidate>
+          <form  className={classes.form} >
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="emaile"
+              
+              label="Correo electronico"
+              name="emaile"
               autoComplete="email"
               autoFocus
             />
@@ -90,14 +119,16 @@ export default function SignInSide() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Contraseña"
               type="password"
-              id="password"
+              id="passwordd"
+              
               autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Recordar"
+              
             />
             <Button
               type="submit"
@@ -106,24 +137,29 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Entrar
             </Button>
-            <Grid container>
-              <Grid item xs>
+            </form>
+              <Grid item className={classes.centrar}>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  ¿Olvidaste tu contraseña?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+              <Grid className={classes.collapse} >
+                
+                <Link href="#" className={classes.collapse} onClick={cambio} variant="body2">
+                  ¿No tienes una cuenta? Registrate
                 </Link>
+                <Collapse in={coll} >
+                    <SignUp />
+                </Collapse>
+
               </Grid>
-            </Grid>
+          
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
+      
         </div>
       </Grid>
     </Grid>
