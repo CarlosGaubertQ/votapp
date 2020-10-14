@@ -1,7 +1,7 @@
 import express, {json} from 'express'
 const morgan = require('morgan')
 const app = express()
-import adminRoute from './routes/adminRoute'
+import AdministradorRoute from './routes/AdministradorRoute'
 
 //middlewares
 app.use(morgan('dev'))
@@ -9,7 +9,7 @@ app.use(json())
 
 
 //routes
-app.use('/api/admin', adminRoute)
+app.use('/api/admin', AdministradorRoute)
 
 
 export default app;
