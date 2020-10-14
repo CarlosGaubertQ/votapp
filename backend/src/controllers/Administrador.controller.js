@@ -17,7 +17,7 @@ export async function createAdministrador(req, res) {
     try {
         const { ad_nombre, ad_apellido, ad_correo_electronico, ad_contrasenia } = req.body
 
-        await bcrypt.genSalt(10,(err,salt)=>{
+        bcrypt.genSalt(10,(err,salt)=>{
             if(err) return console(err)
 
             bcrypt.hash(ad_contrasenia,salt,null,async(err,hash)=>{
