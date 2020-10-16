@@ -1,12 +1,12 @@
 import Sequelize from 'sequelize'  
-
+require('dotenv').config()
 
 export const sequelize =  new Sequelize(
-    'votapp',
-    'postgres',
-    '123456789',
+    process.env.DATABASE,
+    process.env.USER,
+    process.env.PASSWORD,
     {
-        host: 'localhost',
+        host: process.env.HOST,
         dialect: 'postgres',
         pool: {
             max: 5,
