@@ -1,5 +1,6 @@
 import Administrador from '../models/Administrador'
 const bcrypt = require('bcrypt-nodejs');
+const token = require('../service/createToken')
 
 export async function getAdministradores(req, res) {
     try {
@@ -10,7 +11,6 @@ export async function getAdministradores(req, res) {
         res.status(500).send({ data: [] })
     }
 }
-
 
 export async function createAdministrador(req, res) {
 
@@ -53,6 +53,38 @@ export async function createAdministrador(req, res) {
     }
 }
 
+export async function validarAdministradorLogin(req, res){
+    const { ad_contrasenia, ad_correo_electronico } = req.body
+
+    const administrador = await Administrador.findOne({
+        where:{
+            ad_correo_electronico:  ad_correo_electronico
+        }
+    })
+
+    if(!administrador) return res.status(200).send({message: "No se encontro administrador"})
+
+    bcrypt.compare(ad_contrasenia, administrador.ad_contrasenia, function(error, isMatch){
+        if (error) {
+            res.status(500).send(`Error al validar usuario> ${error}`)
+        } else if (!isMatch) {
+            res.status(401).send({ message:'Contraseña incorrecto'})
+        } else {
+            res.status(200).send({ message :'correcto', token: token.createToken(administrador)})
+        }
+    })
+}
+
+export async function validarVigencia(req, res){
+    const administrador = await Administrador.findOne({
+        where:{
+            ad_id: req.administrador
+        }
+    })
+    if(!administrador) return res.status(401).send({message:'usuario no autorizado'})
+    return res.status(200).send({administrador: administrador.ad_correo_electronico})
+}
+
 export async function getAdministrador(req, res) {
     try {
         const { id } = req.params
@@ -61,7 +93,6 @@ export async function getAdministrador(req, res) {
                 ad_id: id
             }
         })
-
 
         if (!administrador) return res.status(400).send({ message: "No existe este administrador" })
         

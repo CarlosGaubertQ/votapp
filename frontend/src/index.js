@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import axios from 'axios' 
 
 axios.interceptors.request.use(config=>{
-  const token = localStorage.getItem('TOKEN_APP_TALLER')
+  const token = localStorage.getItem('TOKEN_VOTAPP_ISW')
   if(token!= null){
     config.headers.Authorization = 'Bearer ' + token
   }else{

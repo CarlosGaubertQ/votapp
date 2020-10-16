@@ -4,9 +4,9 @@ const jwt = require('jwt-simple')
 const moment = require('moment')
 require('dotenv').config()
 
-function createToken(user){
+function createToken(administrador){
     const payload = {
-        sub: user._id,
+        sub: administrador.ad_id,
         iat: moment().unix(),
         exp: moment().add(1,'days').unix(),
     }

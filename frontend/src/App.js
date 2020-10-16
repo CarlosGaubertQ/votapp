@@ -1,26 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import {Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
 import Login from './views/Admin/Login'
-//import Dashboard from './views/Admin/Home/Dashboard'
+import axios from 'axios'
+import Home from './views/Admin/Home/Home'
+
+
 function App() {
 
-  //const [autorizado, setAutorizado] = useState(false)
-  //const [remember, setRemember] = useState(false)
+  const [autorizado, setAutorizado] = useState(false)
+  const [remember, setRemember] = useState(false)
 
+
+  useEffect(() => {
+    renderizadoCondicional()
+  }, [])
+
+
+  function renderizadoCondicional() {
+
+    axios
+      .post("http://localhost:8080/api/admin/vigencia")
+      .then(
+        (response) => {
+          if (response.status === 200) {
+            setAutorizado(true)
+
+            let recordar = localStorage.getItem('RECORDAR_VOTAPP_ISW')
+            if (recordar === 'remember') {
+              setRemember(true);
+            }
+
+          }
+
+        }
+      )
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            setAutorizado(false)
+            
+          }
+
+        } else if (err.request) {
+
+        } else {
+
+        }
+      })
+  }
 
   return (
     <Router>
-        {//falta algo//
-        }
+     {remember ? <Redirect to="/Home"/> :""}
       <Switch>
-          <Route path='/Home' >
-              <div><h1>hola mundo</h1></div>
-          </Route>
-          <Route path='/'>
-              <Login/>
-          </Route>
-          
+        <Route path='/Home' >
+          {autorizado ? <Home/> : <Login />}
+        </Route>
+        <Route path='/'>
+          <Login />
+        </Route>
+
       </Switch>
     </Router>
   );

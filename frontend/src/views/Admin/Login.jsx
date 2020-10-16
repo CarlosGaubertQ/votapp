@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,8 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import SignUp from './SignUp'
-
-
+import axios from 'axios'
+import swal from 'sweetalert';
 
 function Copyright() {
   return (
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [ coll, setcoll ] = useState(false)
-  //const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
 
   const cambio = () =>{
@@ -84,10 +85,75 @@ export default function Login() {
       setcoll(!coll)
   }
 
+  const onSubmit = data => {
+    console.log(data)
+    if (data.email === "" || data.password === "") {
+        swal({
+            title: "Cuidado !",
+            text: "Debes llenar los espacios vacios",
+            icon: "warning",
+            button: "Continuar",
+        });
+    }else{
+        axios
+            .post("http://localhost:8080/api/admin/validar", {
+              ad_correo_electronico: data.email,
+              ad_contrasenia: data.password
+            })
+            .then(
+                (response) => {
+
+                    if(response.data.message === 'correcto'){
+                        swal({
+                            title: "Estas dentro",
+                            text: response.data.mensaje,
+                            icon: "success",
+                            button: "Continuar",
+                        });
+                        
+
+                        localStorage.setItem('TOKEN_VOTAPP_ISW',response.data.token)
+                        if(data.recordar === "remember"){
+                            localStorage.setItem('RECORDAR_VOTAPP_ISW',"remember")
+                        }
+
+                        window.location = "/home"
+                        
+                    }
+                    
+                    
+                    
+                }
+            )
+            .catch((err) => {
+                if (err.response) {
+                    if (err.response.status === 401) {
+                        let motivo = err.response.data.mensaje;
+                        swal({
+                            title: "Algo fallo",
+                            text: motivo,
+                            icon: "error",
+                            button: "Continuar",
+                        });
+                    }
+                    console.log(err.response.data.mensaje)
+                } else if (err.request) {
+                    // client never received a response, or request never left
+                    swal({
+                        title: "Algo fallo",
+                        text: "No existe conexion con la base de datos",
+                        icon: "error",
+                        button: "Continuar",
+                    });
+                } else {
+                    // anything else
+                    console.log("hola 2")
+                }
+            });
+        }
+}
 
 
-
-  //console.log(errors)
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -100,32 +166,32 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             ¡Ingresa!
           </Typography>
-          <form  className={classes.form} >
+          <form onSubmit={handleSubmit(onSubmit)}  className={classes.form} >
             <TextField
               variant="outlined"
               margin="normal"
-              required
-              fullWidth
-              id="emaile"
               
+              fullWidth
+           
+              inputRef={register}
               label="Correo electronico"
-              name="emaile"
+              name="email"
               autoComplete="email"
               autoFocus
             />
             <TextField
               variant="outlined"
               margin="normal"
-              required
+              
               fullWidth
               name="password"
               label="Contraseña"
               type="password"
-              id="passwordd"
-              
+    
+              inputRef={register}
               autoComplete="current-password"
             />
-            <FormControlLabel
+            <FormControlLabel inputRef={register}  name="recordar"
               control={<Checkbox value="remember" color="primary" />}
               label="Recordar"
               
