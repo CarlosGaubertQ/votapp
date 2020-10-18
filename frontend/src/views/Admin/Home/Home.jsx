@@ -1,12 +1,14 @@
-import React from 'react';
+import React from 'react'
+import Navbar from './Navbar'
 
-
-
-export default function Home(){
+function Home() {
     return (
+        
         <div>
-            Este es el home de administrador
+            <Navbar />
+            <h1>Home</h1>
         </div>
     )
 }
 
+export default Home

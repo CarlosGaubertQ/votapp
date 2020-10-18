@@ -1,7 +1,7 @@
 import Administrador from '../models/Administrador'
 const bcrypt = require('bcrypt-nodejs');
 const token = require('../service/createToken')
-
+import {emailValidacion} from '../service/emailValidacion'
 export async function getAdministradores(req, res) {
     try {
         const administradores = await Administrador.findAll()
@@ -41,7 +41,14 @@ export async function createAdministrador(req, res) {
                 }
                 
                 if (newAdministrador) {
-                    return res.status(200).send({ message: "Administrador creado correctamente", data: newAdministrador })
+                    console.log(newAdministrador.codigo_activacion)
+                    try {
+                        res.status(200).send({ message: "Administrador creado correctamente", data: newAdministrador })
+                        emailValidacion(newAdministrador.ad_correo_electronico,newAdministrador.ad_nombre,newAdministrador.codigo_activacion)    
+                    } catch (error) {
+                        return res.status(500).send({ message: 'Se creo el administrador pero no se envio el correo', data: []})    
+                    }
+                    return
                 }
                 
             })
@@ -62,13 +69,13 @@ export async function validarAdministradorLogin(req, res){
         }
     })
 
-    if(!administrador) return res.status(200).send({message: "No se encontro administrador"})
+    if(!administrador) return res.status(401).send({message: "Este Usuario no existe"})
 
     bcrypt.compare(ad_contrasenia, administrador.ad_contrasenia, function(error, isMatch){
         if (error) {
             res.status(500).send(`Error al validar usuario> ${error}`)
         } else if (!isMatch) {
-            res.status(401).send({ message:'Contraseña incorrecto'})
+            res.status(401).send({ message:'Contraseña incorrecta'})
         } else {
             res.status(200).send({ message :'correcto', token: token.createToken(administrador)})
         }

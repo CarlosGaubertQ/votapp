@@ -86,7 +86,6 @@ export default function Login() {
   }
 
   const onSubmit = data => {
-    console.log(data)
     if (data.email === "" || data.password === "") {
         swal({
             title: "Cuidado !",
@@ -128,7 +127,7 @@ export default function Login() {
             .catch((err) => {
                 if (err.response) {
                     if (err.response.status === 401) {
-                        let motivo = err.response.data.mensaje;
+                        let motivo = err.response.data.message;
                         swal({
                             title: "Algo fallo",
                             text: motivo,
@@ -213,7 +212,7 @@ export default function Login() {
               </Grid>
               <Grid className={classes.collapse} >
                 
-                <Link href="#" className={classes.collapse} onClick={cambio} variant="body2">
+                <Link href="#" className={classes.collapse} onClick={cambio}>
                   ¿No tienes una cuenta? Registrate
                 </Link>
                 <Collapse in={coll} >
