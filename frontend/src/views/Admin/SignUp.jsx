@@ -9,10 +9,12 @@ import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
+import axios from 'axios'
+import swal from 'sweetalert'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -25,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
 
   },
+  title:{
+    marginBottom: theme.spacing(3)
+  }
 }));
 
 export default function SignUp() {
@@ -32,7 +37,59 @@ export default function SignUp() {
   const { register, handleSubmit } = useForm();
 
 
-  const onSubmitSignUp = (data, e) => {}
+  const onSubmitSignUp = (data, e) => {
+
+    if (data.firstName === '' || data.lastName === '' || data.emailSign === '' || data.passwordSign === '' || data.confirmPassword === '') {
+      swal({
+        title: "Cuidado !",
+        text: "Debes llenar los espacios vacios",
+        icon: "warning",
+        button: "Continuar",
+      });
+    } else {
+      if (data.passwordSign === data.confirmPassword) {
+
+        axios
+          .post('/api/guardarUsuario', {
+            firstName: data.firstName,
+            lasttName: data.lastName,
+            email: data.emailSign,
+            password: data.passwordSign
+          })
+          .then(
+            (Response) => {
+              
+              swal({
+                title: "Dato guardado satisfactoriamente",
+                text: "Registrado en la base de datos, debes revisar tu correo electronico para activar tu cuenta",
+                icon: "success",
+                button: "Continuar",
+              });
+              //resetear valores en form
+              e.target.reset()
+            }
+          )
+          .catch((error) => {
+            swal({
+              title: "No se pudo guardar el archivo",
+              text: "Este correo ya se encuentra en la base de datos",
+              icon: "error",
+              button: "Continuar",
+            });
+          })
+
+
+      } else {
+        swal({
+          title: "Datos no guardados",
+          text: "Las contraseñas no coinciden",
+          icon: "error",
+          button: "Continuar",
+        });
+      }
+    }
+
+  }
 
 
   return (
@@ -42,7 +99,7 @@ export default function SignUp() {
       <Card className={classes.card}>
         <CardContent>
           <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" className={classes.title} variant="h5">
               Registro nuevo
             </Typography>
             <form onSubmit={handleSubmit(onSubmitSignUp)} name="signUp" className={classes.form} noValidate>

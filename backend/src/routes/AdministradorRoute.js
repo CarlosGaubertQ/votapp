@@ -1,6 +1,8 @@
 import {Router} from 'express'
 const router = Router()
-import { createAdministrador, getAdministradores, getAdministrador, deleteAdministrador, updateAdministrador, validarAdministradorLogin, validarVigencia }from '../controllers/Administrador.controller'   
+import { createAdministrador, getAdministradores, getAdministrador,
+     deleteAdministrador, updateAdministrador,
+      validarAdministradorLogin, validarVigencia, activarCuenta }from '../controllers/Administrador.controller'   
 import {isAuth} from '../middlewares/auth'
 
 
@@ -10,6 +12,7 @@ router.get('/', getAdministradores)
 router.get('/:id', getAdministrador)
 router.delete('/:id', deleteAdministrador)
 router.put('/:id', updateAdministrador)
+router.post('/activarCuenta', activarCuenta)
 
 //json web token
 router.post('/validar', validarAdministradorLogin)

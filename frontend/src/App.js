@@ -61,7 +61,7 @@ function App() {
           <Login />
         </Route>
         <Route path='/missalas'>
-          <MisSalas />
+          {autorizado ? <MisSalas /> : <Login />}
         </Route>
       </Switch>
     </Router>

@@ -81,7 +81,6 @@ export default function Login() {
 
 
   const cambio = () =>{
-      console.log(coll)
       setcoll(!coll)
   }
 
@@ -146,7 +145,7 @@ export default function Login() {
                     });
                 } else {
                     // anything else
-                    console.log("hola 2")
+                 
                 }
             });
         }
@@ -215,7 +214,7 @@ export default function Login() {
                 <Link href="#" className={classes.collapse} onClick={cambio}>
                   ¿No tienes una cuenta? Registrate
                 </Link>
-                <Collapse in={coll} >
+                <Collapse in={coll}>
                     <SignUp />
                 </Collapse>
 

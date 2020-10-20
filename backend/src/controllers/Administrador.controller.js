@@ -2,6 +2,7 @@ import Administrador from '../models/Administrador'
 const bcrypt = require('bcrypt-nodejs');
 const token = require('../service/createToken')
 import {emailValidacion} from '../service/emailValidacion'
+
 export async function getAdministradores(req, res) {
     try {
         const administradores = await Administrador.findAll()
@@ -41,7 +42,6 @@ export async function createAdministrador(req, res) {
                 }
                 
                 if (newAdministrador) {
-                    console.log(newAdministrador.codigo_activacion)
                     try {
                         res.status(200).send({ message: "Administrador creado correctamente", data: newAdministrador })
                         emailValidacion(newAdministrador.ad_correo_electronico,newAdministrador.ad_nombre,newAdministrador.codigo_activacion)    
@@ -89,7 +89,32 @@ export async function validarVigencia(req, res){
         }
     })
     if(!administrador) return res.status(401).send({message:'usuario no autorizado'})
-    return res.status(200).send({administrador: administrador.ad_correo_electronico})
+    return res.status(200).send({administrador: administrador})
+}
+
+export async function activarCuenta(req, res) {
+    const { ad_correo_electronico, codigo_activacion } = req.body
+    const administrador = await Administrador.findAll({
+        where:{
+            ad_correo_electronico
+        }
+    })
+    
+    if(administrador.length === 0) return res.status(400).send({message: 'No existe este administrador', data: []})
+
+    administrador.forEach(async admin =>{
+        if(admin.codigo_activacion === codigo_activacion){
+            await admin.update({
+                cuenta_activada: true
+            })
+            return res.status(200).send({message: 'Cuenta activada correctamente', data: admin})
+        }else{
+            return res.status(400).send({message: 'Este codigo no es valido', data: []})
+        }
+    })
+
+    
+
 }
 
 export async function getAdministrador(req, res) {
