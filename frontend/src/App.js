@@ -4,7 +4,8 @@ import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-d
 import Login from './views/Admin/Login'
 import axios from 'axios'
 import Home from './views/Admin/Home/Home'
-import MisSalas from './views/Admin/Home/MisSalas'
+import MisSalas from './views/Admin/Home/Missalas/MisSalas'
+import Auth from './views/Admin/Auth/Auth'
 
 function App() {
 
@@ -57,8 +58,17 @@ function App() {
         <Route path='/Home' >
           {autorizado ? <Home/> : <Login />}
         </Route>
+        <Route path='/Auth/:idAdmin' >
+          {autorizado ? <Auth/> : <Login/>}
+        </Route>
         <Route path='/' exact>
           <Login />
+        </Route>
+        <Route path='/missalas'>
+          {autorizado ? <MisSalas /> : <Login />}
+        </Route>
+        <Route path='/missalas'>
+          {autorizado ? <MisSalas /> : <Login />}
         </Route>
         <Route path='/missalas'>
           {autorizado ? <MisSalas /> : <Login />}
