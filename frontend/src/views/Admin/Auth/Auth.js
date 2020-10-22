@@ -8,15 +8,15 @@ import axios from 'axios';
     const {idAdmin} = useParams()
 
     useEffect(() => {
-        cargar();
-        console.log(administrador)
-      }, []);
+        const cargar = async() => {
+            const {data} = await axios.get('http://localhost:8080/api/admin/' + idAdmin)
+                setAdministrador(data.data)
+                return null
+        } 
+        cargar()
+    }, [idAdmin])
     
-    const cargar = async() => {
-        const {data} = await axios.get('http://localhost:8080/api/admin/' + idAdmin)
-            setAdministrador(data)
-            return null
-    } 
+    
          
 
     return(
