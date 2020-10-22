@@ -21,7 +21,8 @@ import axios from 'axios';
 
     return(
         <div>
-            <p>El usuario es: {administrador.ad_nombre}</p>
+            <h1>El usuario es: {administrador.ad_nombre}</h1>
+            
             <button>Click ME!</button>
         </div>
     ) 
