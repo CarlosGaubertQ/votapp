@@ -59,7 +59,7 @@ function App() {
           {autorizado ? <Home/> : <Login />}
         </Route>
         <Route path='/Auth/:idAdmin' >
-          {autorizado ? <Auth/> : <Login/>}
+          <Auth></Auth>
         </Route>
         <Route path='/' exact>
           <Login />
