@@ -16,7 +16,8 @@ const useStyle = makeStyles((theme) => ({
         paddingBottom:'20px',
         borderRadius:'20px',
         background:'#e5d7d7',
-        border: '2px solid black',
+        border: '4px solid black',
+        boxShadow:'5px 10px black'
     },
     botones:{
         marginLeft:'25px',

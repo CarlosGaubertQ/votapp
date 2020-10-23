@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Button, Container} from '@material-ui/core';
+import {Button, Container, Grid} from '@material-ui/core';
 import {Box} from '@material-ui/core'
 
 const useStyles = makeStyles({
@@ -27,6 +27,14 @@ const useStyles = makeStyles({
     paddingLeft:'3rem',    
     borderRadius:'15px',
     background: 'linear-gradient(135deg, hsl(139, 36%, 78%) 0%, white 100%)'
+  },
+  boton:{
+    marginTop:'15px',
+    display:'flex',
+    justifyContent:'center',
+    fontSize:'1rem',
+    marginLeft:'400px',
+    padding: '15px'
   }
 });
 
@@ -45,7 +53,7 @@ export default function BasicTable() {
   const classes = useStyles();
 
   return (
-    <Container className={classes.bg}>
+      <Container className={classes.bg}>
         <Box
             className={classes.box}
             fontSize="h3.fontSize"
@@ -77,9 +85,10 @@ export default function BasicTable() {
       </Table>
     </TableContainer>
     <Button
+        className={classes.boton}
         variant='contained'
         color='primary'
     >ENVIAR ESTADISTICAS A LOS VOTANTES</Button>
-    </Container>
+    </Container> 
   );
 }
