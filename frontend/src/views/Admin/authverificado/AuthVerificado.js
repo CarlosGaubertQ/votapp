@@ -11,10 +11,9 @@ import {Icon} from '@material-ui/core'
 const useStyle = makeStyles((theme) => ({
     tarjeta:{
         paddingBottom:'20px',
-        borderRadius:'20px',
-        background:'#b1ee95',
-        border: '2px solid black',
-        boxShadow:'5px 10px black'
+        borderRadius:'8px',
+        background:'hsl(0, 0%, 85%)',
+        border: '2px solid black'
     },
     botones:{
         marginLeft:'25px',
@@ -30,7 +29,6 @@ const useStyle = makeStyles((theme) => ({
         color:'Black',
         fontSize:'20px',
         marginLeft:'3.5rem',
-        fontSize:'1.5rem',
         textDecoration:'underline'
     }, 
     imagen:{
@@ -41,6 +39,7 @@ const useStyle = makeStyles((theme) => ({
           theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        paddingBottom:'26rem'
     }
 }))
 
@@ -54,6 +53,7 @@ export default function AuthVerificado () {
             <Container maxWidth="sm">
             <Card 
                 className={css.tarjeta}
+                elevation={4}
             >
                 <Typography 
                     component="div">
