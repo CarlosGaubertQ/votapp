@@ -6,6 +6,9 @@ import axios from 'axios'
 import Home from './views/Admin/Home/Home'
 import MisSalas from './views/Admin/Home/Missalas/MisSalas'
 import Auth from './views/Admin/Auth/Auth'
+import AuthVerificado from './views/Admin/authverificado/AuthVerificado';
+import VerRegistroDeVoto from './views/Admin/Home/Verregistrodevotos/VerRegistroDeVotos'
+
 
 function App() {
 
@@ -61,6 +64,9 @@ function App() {
         <Route path='/Auth/:idAdmin' >
           <Auth></Auth>
         </Route>
+        <Route path='/AuthVerificado' >
+          <AuthVerificado></AuthVerificado>
+        </Route>
         <Route path='/' exact>
           <Login />
         </Route>
@@ -70,8 +76,8 @@ function App() {
         <Route path='/missalas'>
           {autorizado ? <MisSalas /> : <Login />}
         </Route>
-        <Route path='/missalas'>
-          {autorizado ? <MisSalas /> : <Login />}
+        <Route path='/VerRegistroDeVotos'>
+          <VerRegistroDeVoto></VerRegistroDeVoto>
         </Route>
       </Switch>
     </Router>

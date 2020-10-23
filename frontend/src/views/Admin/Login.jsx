@@ -191,7 +191,7 @@ export default function Login() {
               autoComplete="current-password"
             />
             <FormControlLabel inputRef={register}  name="recordar"
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="secondary" />}
               label="Recordar"
               
             />
