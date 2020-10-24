@@ -9,6 +9,8 @@ import {Typography} from '@material-ui/core'
 import {TextField} from '@material-ui/core'
 import {Card} from '@material-ui/core'
 import {Grid} from '@material-ui/core'
+import { IconButton } from '@material-ui/core';
+import { SiGmail } from "react-icons/si";
 
 //styles
 const useStyle = makeStyles((theme) => ({
@@ -81,17 +83,17 @@ const useStyle = makeStyles((theme) => ({
                         textAlign='center'
                     >Activa tu cuenta</Box>
                     <Box
-                        fontSize={20}
+                        fontSize={14}
                         marginBottom={3}
                         marginLeft={2}
-                    >Por favor revisa tu correo para activar tu cuenta</Box>
-                    <Button
-                        className={css.botones} 
-                        variant="contained" 
-                        color="primary" 
-                        href="https://gmail.com" 
-                        target="_blank"
-                    >Ir a Gmail</Button>
+                    >Estimado {administrador.ad_nombre}. Hemos enviado un codigo de activación a '{administrador.ad_correo_electronico}'. Por favor verifique su correo y active su cuenta.</Box>
+                    <IconButton
+                      
+                        
+                        href="https://gmail.com"
+                        color="secondary">
+                        <SiGmail color="primary"/>
+                    </IconButton>
                     <Button 
                         className={css.botones}
                         variant="contained" 
@@ -112,7 +114,7 @@ const useStyle = makeStyles((theme) => ({
                     <TextField 
                         className={css.textfield}
                         id="outlined-basic" 
-                        label="ingresa el codigo recibido" 
+                        label="CODIGO" 
                         variant="filled" 
                         fullWidth />
                     <Button 

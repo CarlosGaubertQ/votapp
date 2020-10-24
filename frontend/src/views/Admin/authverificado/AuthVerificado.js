@@ -29,7 +29,7 @@ const useStyle = makeStyles((theme) => ({
         color:'Black',
         fontSize:'20px',
         marginLeft:'3.5rem',
-        fontSize:'1.5rem',
+        
         textDecoration:'underline'
     }, 
     imagen:{

@@ -1,3 +1,5 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 require('dotenv').config()
 import app from './app'
 
