@@ -114,7 +114,7 @@ const useStyle = makeStyles((theme) => ({
                 }else if(response.status === 400){
                     swal({
                         title: "No activado",
-                        text: error.response.message,
+                        text: response.message,
                         icon: "error",
                         button: "Continuar",
                     });
