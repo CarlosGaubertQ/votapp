@@ -59,7 +59,7 @@ function App() {
      {remember ? <Redirect to="/Home"/> :""}
       <Switch>
         <Route path='/Home' >
-          {autorizado ? <Home/> : <Login />}
+          <Home></Home>
         </Route>
         <Route path='/Auth/:idAdmin' >
           <Auth></Auth>

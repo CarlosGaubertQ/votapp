@@ -1,23 +1,22 @@
 .navbar{
-    background-color: #060b26;
+    background-color:hsl(250, 26%, 44%) ;
     height: 80px;
     display: flex;
-
     align-items: center;
 }
 
 .menu-bars{
+    width: 100%;
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
 }
 
 .nav-menu{
-    background-color: #060b26;
+    background-color: hsl(250, 26%, 44%);
     width: 250px;
     height: 100vh;
     display: flex;
-   
     position: fixed;
     top: 0;
     left: -100%;
@@ -31,14 +30,14 @@
 
 .nav-text{
     display: flex;
-
     align-items: center;
-    padding: 8px 0px 8px 16px;
+    padding: 8px 0px 8px 0px;
     list-style: none;
     height: 60px;
 }
 
 .nav-text a{
+    font-family: 'Roboto';
     text-decoration: none;
     color: #f5f5f5;
     font-size: 18px;
@@ -46,12 +45,12 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
     border-radius: 4px;
+    margin-right: 50px;
 }
 
 .nav-text a:hover{
-    background-color: #1a83ff;
+    background-color: hsl(266, 32%, 64%);
 }
 
 .nav-menu-items{
@@ -59,10 +58,9 @@
 }
 
 .navbar-toogle{
-    background-color: #060b26;
+    background-color: hsl(167, 98%, 39%);
     width: 100%;
     height: 80px;
     display: flex;
-   
     align-items: center;
 }
