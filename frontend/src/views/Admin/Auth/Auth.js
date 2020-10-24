@@ -11,10 +11,9 @@ import {Card} from '@material-ui/core'
 import {Grid} from '@material-ui/core'
 import { IconButton } from '@material-ui/core';
 import { SiGmail } from "react-icons/si";
-<<<<<<< HEAD
-=======
 import {SiMicrosoftoutlook} from "react-icons/si";
->>>>>>> dc50b2e0a79c223fd32925c9dd2194c28df2bf6b
+import { useForm } from 'react-hook-form';
+import swal from 'sweetalert';
 
 //styles
 const useStyle = makeStyles((theme) => ({
@@ -74,88 +73,68 @@ const useStyle = makeStyles((theme) => ({
 
 
  export default function Auth ()  {
-
     const css = useStyle()
-
-
-    //Funciones
     const [administrador, setAdministrador] = useState([])
     const {idAdmin} = useParams()
+    const { register, handleSubmit } = useForm();
 
     useEffect(() => {
         const cargar = async() => {
             const {data} = await axios.get('http://localhost:8080/api/admin/' + idAdmin)
                 setAdministrador(data.data)
-                console.log("hola mundoo")
                 return null
         } 
         cargar()
     }, [idAdmin])
+
+
+    const onSubmit = data => {
+        if(data.codigo_activacion === ""){
+            swal({
+                title: "Activacion",
+                text: "Debes ingresar un codigo",
+                icon: "error",
+                button: "Continuar",
+            });
+        }else{
+            axios.post('http://localhost:8080/api/admin/activarCuenta',{
+                ad_correo_electronico: administrador.ad_correo_electronico,
+                codigo_activacion: data.codigo_activacion
+            }).then((response) =>{
+                if(response.status === 200){
+                    swal({
+                        title: response.data.message,
+                        text: "",
+                        icon: "success",
+                        button: "Continuar",
+                    });
+                    
+                    window.location = "/authverificado"
+
+                }else if(response.status === 400){
+                    swal({
+                        title: "No activado",
+                        text: error.response.message,
+                        icon: "error",
+                        button: "Continuar",
+                    });
+                }
+            }).catch((error) =>{
+                swal({
+                    title: error.response.message,
+                    text: "Ocurrio un problema al activar tu cuenta",
+                    icon: "error",
+                    button: "Continuar",
+                });
+            })
+        }
+    }
 
          
     return(
     <>        
         <Grid className={css.imagen}> 
             <Container maxWidth="sm">
-<<<<<<< HEAD
-            <Card 
-                className={css.tarjeta}
-            >
-                <Typography 
-                    component="div">
-                    <Box 
-                        fontSize="h4.fontSize" 
-                        m={1} 
-                        letterSpacing={2} 
-                        textAlign='center'
-                    >Activa tu cuenta</Box>
-                    <Box
-                        fontSize={14}
-                        marginBottom={3}
-                        marginLeft={2}
-                    >Estimado {administrador.ad_nombre}. Hemos enviado un codigo de activación a '{administrador.ad_correo_electronico}'. Por favor verifique su correo y active su cuenta.</Box>
-                    <IconButton
-                      
-                        
-                        href="https://gmail.com"
-                        color="secondary">
-                        <SiGmail color="primary"/>
-                    </IconButton>
-                    <Button 
-                        className={css.botones}
-                        variant="contained" 
-                        color="primary" 
-                        href="https://hotmail.com" 
-                        target="_blank"
-                    >Ir a Outlook</Button>
-                </Typography>
-                <Typography component='div'>
-                    <Box
-                        className={css.box}
-                        marginLeft={2}
-                        marginTop={3}
-                        fontSize={20}
-                    >
-                        Ingresa el CÓDIGO que recibiste acá!
-                    </Box>
-                    <TextField 
-                        className={css.textfield}
-                        id="outlined-basic" 
-                        label="CODIGO" 
-                        variant="filled" 
-                        fullWidth />
-                    <Button 
-                        className={css.botones}
-                        variant='contained'
-                        color='secondary'
-                        fullWidth
-                    >Enviar</Button>
-                </Typography>
-            </Card>
-        </Container>      
-        </Grid>
-        
-=======
                 <Card 
                     className={css.tarjeta}>
                     <Typography 
@@ -176,7 +155,7 @@ const useStyle = makeStyles((theme) => ({
                             className={css.icono}
                             href="https://gmail.com/"
                             color="secondary"
-                            Target="_blank"
+                            target="_blank"
                         ><SiGmail color="primary"/></IconButton>
                         <IconButton
                             className={css.icono}
@@ -186,29 +165,35 @@ const useStyle = makeStyles((theme) => ({
                         ><SiMicrosoftoutlook color="primary" /></IconButton>
                         </div>
                         </Typography>
-                        <Typography component='div'>
-                            <Box
-                                className={css.box}
-                                marginLeft={2}
-                                marginTop={3}
-                                fontSize={16}>Ingresa el CÓDIGO que recibiste acá!</Box>
-                            <TextField 
-                                className={css.textfield}
-                                id="outlined-basic" 
-                                label="CODIGO" 
-                                variant="filled" 
-                            />
-                            <Button 
-                                className={css.botones}
-                                variant='contained'
-                                color='secondary'
-                                fullWidth>Enviar</Button>
-                        </Typography>
+                        <form onSubmit={handleSubmit(onSubmit)}  >
+                            <Typography component='div'>
+                                <Box
+                                    className={css.box}
+                                    marginLeft={2}
+                                    marginTop={3}
+                                    fontSize={16}>Ingresa el CÓDIGO que recibiste acá!</Box>
+                               
+                                 <TextField
+                                    InputProps={{ inputProps: { min: 1000, max: 9999 } }}
+                                    inputRef={register}
+                                    className={css.textfield}
+                                    name="codigo_activacion"
+                                    label="CODIGO"
+                                    type="number"
+                                    helperText="Ingresar solo numeros"
+                                 />
+                                <Button 
+                                    type="submit"
+                                    className={css.botones}
+                                    variant='contained'
+                                    color='secondary'
+                                    fullWidth>Enviar</Button>
+                            </Typography>
+                        </form>
                 </Card>
             </Container>      
         </Grid>     
     </>
->>>>>>> dc50b2e0a79c223fd32925c9dd2194c28df2bf6b
     ) 
 
 }

@@ -104,19 +104,23 @@ export default function Login() {
 
                     if(response.data.message === 'correcto'){
                         swal({
-                            title: "Estas dentro",
+                            title: "Cuenta de administrador",
                             text: response.data.mensaje,
                             icon: "success",
                             button: "Continuar",
                         });
                         
+                        if(response.data.cuenta_activada === true){
+                          localStorage.setItem('TOKEN_VOTAPP_ISW',response.data.token)
+                          if(data.recordar === "remember"){
+                              localStorage.setItem('RECORDAR_VOTAPP_ISW',"remember")
+                          }
 
-                        localStorage.setItem('TOKEN_VOTAPP_ISW',response.data.token)
-                        if(data.recordar === "remember"){
-                            localStorage.setItem('RECORDAR_VOTAPP_ISW',"remember")
+                          window.location = "/home"
+                        
+                        }else{
+                          window.location = "/auth/" + response.data.ad_id
                         }
-
-                        window.location = "/home"
                         
                     }
                     

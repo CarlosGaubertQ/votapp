@@ -44,7 +44,8 @@ export async function createAdministrador(req, res) {
                 if (newAdministrador) {
                     try {
                         res.status(200).send({ message: "Administrador creado correctamente", data: newAdministrador })
-                        emailValidacion(newAdministrador.ad_correo_electronico,newAdministrador.ad_nombre,newAdministrador.codigo_activacion)    
+                        emailValidacion(newAdministrador.ad_correo_electronico,newAdministrador.ad_nombre,newAdministrador.codigo_activacion)
+                        console.log("hola mundo")    
                     } catch (error) {
                         return res.status(500).send({ message: 'Se creo el administrador pero no se envio el correo', data: []})    
                     }
@@ -77,7 +78,7 @@ export async function validarAdministradorLogin(req, res){
         } else if (!isMatch) {
             res.status(401).send({ message:'Contraseña incorrecta'})
         } else {
-            res.status(200).send({ message :'correcto', token: token.createToken(administrador)})
+            res.status(200).send({ message :'correcto', token: token.createToken(administrador), cuenta_activada: administrador.cuenta_activada, ad_id:administrador.ad_id})
         }
     })
 }

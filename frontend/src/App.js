@@ -56,16 +56,16 @@ function App() {
 
   return (
     <Router>
-     {remember ? <Redirect to="/Home"/> :""}
+     {remember ? <Redirect to="/home"/> :""}
       <Switch>
-        <Route path='/Home' >
-          <Home></Home>
+        <Route path='/home' >
+        {autorizado ? <Home /> : <Login />}
         </Route>
-        <Route path='/Auth/:idAdmin' >
+        <Route path='/auth/:idAdmin' >
           <Auth></Auth>
         </Route>
-        <Route path='/AuthVerificado' >
-          <AuthVerificado></AuthVerificado>
+        <Route path='/authverificado' >
+          <AuthVerificado />
         </Route>
         <Route path='/' exact>
           <Login />
@@ -73,11 +73,8 @@ function App() {
         <Route path='/missalas'>
           {autorizado ? <MisSalas /> : <Login />}
         </Route>
-        <Route path='/missalas'>
-          {autorizado ? <MisSalas /> : <Login />}
-        </Route>
-        <Route path='/VerRegistroDeVotos'>
-          <VerRegistroDeVoto></VerRegistroDeVoto>
+        <Route path='/verregistrodevotos'>
+          {autorizado ? <VerRegistroDeVoto /> : <Login />}
         </Route>
       </Switch>
     </Router>

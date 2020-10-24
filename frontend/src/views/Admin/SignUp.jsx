@@ -50,14 +50,14 @@ export default function SignUp() {
       if (data.passwordSign === data.confirmPassword) {
 
         axios
-          .post('/api/guardarUsuario', {
-            firstName: data.firstName,
-            lasttName: data.lastName,
-            email: data.emailSign,
-            password: data.passwordSign
+          .post('http://localhost:8080/api/admin/', {
+            ad_nombre: data.firstName,
+            ad_apellido: data.lastName,
+            ad_correo_electronico: data.emailSign,
+            ad_contrasenia: data.passwordSign
           })
           .then(
-            (Response) => {
+            (response) => {
               
               swal({
                 title: "Dato guardado satisfactoriamente",
@@ -65,11 +65,13 @@ export default function SignUp() {
                 icon: "success",
                 button: "Continuar",
               });
-              //resetear valores en form
-              e.target.reset()
+
+              window.location = "/auth/" + response.data.data.ad_id  
+              
             }
           )
           .catch((error) => {
+            console.log(error)
             swal({
               title: "No se pudo guardar el archivo",
               text: "Este correo ya se encuentra en la base de datos",

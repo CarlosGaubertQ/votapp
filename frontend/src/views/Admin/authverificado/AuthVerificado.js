@@ -29,10 +29,6 @@ const useStyle = makeStyles((theme) => ({
         color:'Black',
         fontSize:'20px',
         marginLeft:'3.5rem',
-<<<<<<< HEAD
-        
-=======
->>>>>>> dc50b2e0a79c223fd32925c9dd2194c28df2bf6b
         textDecoration:'underline'
     }, 
     imagen:{
